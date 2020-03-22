@@ -3,3 +3,5 @@
 todo
 
 viewは別リポジトリに分ける
+
+これはproduct tableからデータをやり取りするapi
