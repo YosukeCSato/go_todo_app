@@ -4,6 +4,9 @@ package db
 import (
 	"fmt"
 
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+
+
 	"github.com/jinzhu/gorm"
 
 	entity "m/models/entity"
@@ -44,4 +47,40 @@ func FindAllProducts() []entity.Product {
 	defer db.Close()
 
 	return products
+}
+
+func FindProduct(productID int) []entity.Product {
+	product := []entity.Product{}
+
+	db := open()
+
+	db.First(&product, productID)
+	defer db.Close()
+
+	return product
+}
+
+func InsertProduct(registerProduct *entity.Product) {
+	db := open()
+
+	db.Create(&registerProduct)
+	defer db.Close()
+}
+
+func UpdateStateProduct(productID int, productState int) {
+	product := []entity.Product{}
+
+	db := open()
+
+	db.Model(&product).Where("ID = ?", productID).Update("State", productState)
+	defer db.Close()
+}
+
+func DeleteProduct(productID int) {
+	product := []entity.Product{}
+
+	db := open()
+
+	db.Delete(&product, productID)
+	defer db.Close()
 }
